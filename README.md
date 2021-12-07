@@ -11,10 +11,10 @@
 ![azure_proj3_diagram](https://user-images.githubusercontent.com/62255561/145049140-054a7ca2-c248-48a9-913f-bdded98ca551.jpg)
 
 
-Cognitive Services - klasyfikacja zwierząt na zdjęciach
-Maps - mapa, kliknięcie na dany region pokazuje informacje na temat zagrożonych gatunków na wybranym terytorium
-Storage Account - przechowywanie obrazów w Blob Storage
-Functions - zarządzanie danymi z bazy danych oraz Blob Storage
-SQL Database - przechowywanie danych (poza obrazami) 
-Key Vault - przechowywanie sekretów
-App Services - hostowanie aplikacji
+1. Cognitive Services - klasyfikacja zwierząt na zdjęciach
+2. Maps - mapa, kliknięcie na dany region pokazuje informacje na temat zagrożonych gatunków na wybranym terytorium
+3. Storage Account - przechowywanie obrazów w Blob Storage
+4. Functions - zarządzanie danymi z bazy danych oraz Blob Storage
+5. SQL Database - przechowywanie danych (poza obrazami) 
+6. Key Vault - przechowywanie sekretów
+7. App Services - hostowanie aplikacji
