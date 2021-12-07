@@ -1,6 +1,14 @@
 # endangered-species-app
  Projekt zaliczeniowy nr 3 na zajęcia z przedmiotu "Wprowadzenie do aplikacji i rozwiązań opartych o Sztuczną Inteligencję i Microsoft Azure". 
 
+## Skład zespołu
+- Paweł Cegielski
+- Szymon Kuś
+- Krzysztof Szałankiewicz
+- Andrii Istranin
+- Kacper Hołubowicz
+- Jakub Grenda
+
 ## Główne funkcjonalności
 - pokazywanie zagrożonych gatunków na wybranym na mapie obszarze 
 - klasyfikacja zwierząt na obrazach i wyświetlanie komunikatu, jeśli zwierzę jest przedstawicielem zagrożonego gatunku
@@ -10,7 +18,6 @@
 ## Architektura
 ![azure_proj3_diagram](https://user-images.githubusercontent.com/62255561/145049140-054a7ca2-c248-48a9-913f-bdded98ca551.jpg)
 
-
 1. Cognitive Services - klasyfikacja zwierząt na zdjęciach
 2. Maps - mapa, kliknięcie na dany region pokazuje informacje na temat zagrożonych gatunków na wybranym terytorium
 3. Storage Account - przechowywanie obrazów w Blob Storage
@@ -18,3 +25,4 @@
 5. SQL Database - przechowywanie danych (poza obrazami) 
 6. Key Vault - przechowywanie sekretów
 7. App Services - hostowanie aplikacji
+
