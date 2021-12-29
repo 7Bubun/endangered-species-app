@@ -1,0 +1,18 @@
+p {
+    text-align: left;
+    font-size: x-large;
+}
+
+@media (max-width: 1080px) {
+    h1 {
+        font-size: 96px;
+        margin-top: 5rem;
+    }   
+}
+
+@media (min-width: 1081px) {
+    h1 {
+        font-size: 120px;
+        margin-top: 7rem;
+    }   
+}

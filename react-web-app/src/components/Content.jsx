@@ -3,10 +3,11 @@ import HomeView from "./HomeView";
 import MapView from "./MapView";
 import ImageView from "./ImageView";
 import InfoView from "./InfoView";
+import "./Content.css";
 
 class Content extends Component {
     render() {
-        return <div>{this.selectView()}</div>;
+        return <div className="Content">{this.selectView()}</div>;
     }
 
     selectView() {
