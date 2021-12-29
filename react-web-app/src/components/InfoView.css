@@ -1,4 +1,4 @@
-h2 {
+h2.header2 {
     font-size: 44px;
 }
 
@@ -16,6 +16,7 @@ a {
 .container {
     background-color: #1a1a1a;
     height: 85vh;
+    margin-top: 2em;
 }
 
 .sidebar {
@@ -82,8 +83,4 @@ a {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-}
-
-.empty {
-    clear: both;
 }

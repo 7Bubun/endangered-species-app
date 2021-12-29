@@ -9,13 +9,13 @@ class Navbar extends Component {
                     Homepage
                 </button>
                 <button className="navbar-button" onClick={() => this.props.routingFunction("mapview")}>
-                    Endangered species' map
+                    Map of Endangered Species
                 </button>
                 <button className="navbar-button" onClick={() => this.props.routingFunction("imageview")}>
-                    Image Classification
+                    Species Classification
                 </button>
                 <button className="navbar-button" onClick={() => this.props.routingFunction("infoview")}>
-                    Information
+                    Encyclopedia
                 </button>
             </div>
         );

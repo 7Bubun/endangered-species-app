@@ -18,7 +18,7 @@ class InfoView extends Component {
 
                 <div className='content'>
                     <div className='title'>
-                        <h2>{this.state.title == null ? 'Encyclopedia' : this.state.title}</h2>
+                        <h2 className='header2'>{this.state.title == null ? 'Encyclopedia' : this.state.title}</h2>
                     </div>
 
                     <div className='image'>
@@ -26,7 +26,7 @@ class InfoView extends Component {
                     </div>
 
                     <div className='text'>
-                        {this.state.text == null ? 'Choose species from sidebar to display infromation.'
+                        {this.state.text == null ? 'Choose species on sidebar to display information.'
                             : this.state.text}
                     </div>
 
@@ -34,7 +34,7 @@ class InfoView extends Component {
                         <div>
                             <div>Sources:</div>
                             {this.state.links == null ? '' : this.state.links.map(
-                                link => <div> <a href={link} target='_blank' rel='noreferrer'>{link}</a></div>)}
+                                link => <div key={link}> <a href={link} target='_blank' rel='noreferrer'>{link}</a></div>)}
                         </div>
                     </div>
                 </div>
