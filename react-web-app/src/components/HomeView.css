@@ -1,0 +1,42 @@
+p {
+    text-align: justify;
+    font-size: medium;
+}
+
+.info{
+    background-color: #1a1a1a;
+    padding: 1.5em;
+    float: left;
+}
+
+@media (max-width: 1080px) {
+    h1 {
+        font-size: 96px;        
+    }   
+    
+    .info {
+        height: 312px;
+        width: calc(312px - 3em);
+        margin: 4px;
+    }
+
+    #guardian-of-responisveness{
+        clear: both;
+    }
+}
+
+@media (min-width: 1081px) {
+    h1 {
+        font-size: 120px;
+    }   
+
+    .info {
+        height: 264px;
+        width: calc(264px - 3em);
+        margin: 3px;
+    }
+
+    #guardian-of-responisveness{
+        float: left;
+    }
+}

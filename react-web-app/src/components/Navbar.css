@@ -1,0 +1,22 @@
+.Navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1a1a1a;
+    text-align: center;
+    height: 3rem;
+}
+
+.navbar-button {
+    width: 13em;
+    background-color: #005105;
+    color: #cecece;
+    height: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.25rem;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
