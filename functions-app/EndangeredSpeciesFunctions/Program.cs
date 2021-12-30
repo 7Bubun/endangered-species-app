@@ -22,6 +22,7 @@ namespace EndangeredSpeciesFunctions
                 {
                     s.AddTransient<ISpeciesInformationConnection, SpeciesInformationConnection>();
                     s.AddTransient<ISpeciesImageConnection, SpeciesImageConnection>();
+                    s.AddTransient<ISpeciesNamesConnection, SpeciesNamesConnection>();
                 })
                 .Build();
 

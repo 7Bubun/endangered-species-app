@@ -13,25 +13,40 @@ using EndangeredSpeciesFunctions.Models.DTO;
 
 namespace EndangeredSpeciesFunctions.Functions
 {
-    public class SpeciesWithTagFunction
+    public class SpeciesFunction
     {
-        private readonly ISpeciesInformationConnection connection;
+        private readonly ISpeciesInformationConnection speciesConnection;
+        private readonly ISpeciesNamesConnection namesConnection;
 
-        public SpeciesWithTagFunction(ISpeciesInformationConnection connection)
+        public SpeciesFunction(ISpeciesInformationConnection connection,
+            ISpeciesNamesConnection namesConnection)
         {
-            this.connection = connection;
+            this.speciesConnection = connection;
+            this.namesConnection = namesConnection;
         }
 
-        [Function("species")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req)
+        [Function("species-tag")]
+        public HttpResponseData RunPost([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req)
         {
             TagRequest request = GetRequestBody(req.Body);
 
-            Species speciesInformation = connection.FindSpeciesWithInformation(request);
+            Species speciesInformation = speciesConnection.FindSpeciesWithInformation(request);
             SpeciesDTO speciesDTO = StaticSpeciesMapper.SpeciesToDTO(speciesInformation);
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Body = CreateResponseBody(speciesDTO);
+            response.Headers.Add("Content-Type", "application/json");
+
+            return response;
+        }
+
+        [Function("species")]
+        public HttpResponseData RunGet([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req)
+        {
+            List<SpeciesNameResponse> names = namesConnection.GetAllSpeciesNames();
+
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            response.Body = CreateResponseBody(names);
             response.Headers.Add("Content-Type", "application/json");
 
             return response;
@@ -49,6 +64,16 @@ namespace EndangeredSpeciesFunctions.Functions
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
             writer.Write(JsonConvert.SerializeObject(speciesList));
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
+        private Stream CreateResponseBody(List<SpeciesNameResponse> speciesNameList)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(JsonConvert.SerializeObject(speciesNameList));
             writer.Flush();
             stream.Position = 0;
             return stream;
