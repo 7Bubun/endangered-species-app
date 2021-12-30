@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EndangeredSpeciesFunctions.Models.DTO
@@ -14,6 +15,18 @@ namespace EndangeredSpeciesFunctions.Models.DTO
                 FullName = sp.FullSpeciesName,
                 Details = DetailsToDTO(sp.Details),
                 Links = LinksToDTO(sp.Links)
+            };
+        }
+
+        public static SpeciesWithImage SpeciesWithImageDTO(Species sp, SpeciesImages image)
+        {
+            return new SpeciesWithImage()
+            {
+                FullName = sp.FullSpeciesName,
+                Category = sp.Category,
+                Details = DetailsToDTO(sp.Details),
+                Links = LinksToDTO(sp.Links),
+                Image = Convert.ToBase64String(image.Image)
             };
         }
 
