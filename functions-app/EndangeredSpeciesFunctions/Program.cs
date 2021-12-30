@@ -24,10 +24,7 @@ namespace EndangeredSpeciesFunctions
                 })
                 .Build();
 
-            //host.Run();
-            var test = host.Services.GetService<ISpeciesInformationConnection>();
-            TestClass testClass = new TestClass(test);
-            testClass.Test("dog");
+            host.Run();
         }
     }
 }

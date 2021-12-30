@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Linq;
+using System.Data.Common;
 
 namespace EndangeredSpeciesFunctions.DataAccess
 {
-    //TODO dodanie Id do detali i linków i robienie distinct
     public class SpeciesInformationConnection : ISpeciesInformationConnection
     {
         private const string query =
@@ -24,44 +24,47 @@ namespace EndangeredSpeciesFunctions.DataAccess
             this.configuration = configuration;
         }
 
-        public List<Species> FindSpeciesWithInformation(params string[] speciesTags)
+        public Species FindSpeciesWithInformation(TagRequest speciesTag)
         {
-            List<Species> speciesList = new List<Species>();
-
             using (var connection = new SqliteConnection(configuration.GetConnectionString("Dev")))
             {
-
-                foreach (string speciesTag in speciesTags)
-                {
-                    Species foundSpecies = new Species();
-                    foundSpecies.Details = new List<SpeciesDetails>();
-                    foundSpecies.Links = new List<SpeciesLinks>();
-
-                    var sp = connection.Query<Species, SpeciesDetails, SpeciesLinks, Species>(
-                    query,
-                    (species, speciesDetails, speciesLinks) =>
-                    {
-                        foundSpecies.SpeciesTag = species.SpeciesTag;
-                        foundSpecies.FullSpeciesName = species.FullSpeciesName;
-                        foundSpecies.Category = species.Category;
-
-                        if(!foundSpecies.Details.Contains(speciesDetails))
-                        {
-                            foundSpecies.Details.Add(speciesDetails);
-                        }
-                        if(!foundSpecies.Links.Contains(speciesLinks))
-                        {
-                            foundSpecies.Links.Add(speciesLinks);
-                        }
-                        return species;
-                    },
-                    new { SpeciesTag = speciesTag },
-                    splitOn: "SpeciesTag");
-
-                    Console.WriteLine(foundSpecies.FullSpeciesName + foundSpecies.Details.Count);
-                }
+                Species foundSpecies = GetSpecies(connection, speciesTag.Tag);
+                return foundSpecies;
             }
-            return null;
+        }
+
+        private Species GetSpecies(DbConnection connection, string speciesTag)
+        {
+            Species foundSpecies = new Species();
+
+            Dictionary<int, SpeciesDetails> details = new Dictionary<int, SpeciesDetails>();
+            Dictionary<int, SpeciesLinks> links = new Dictionary<int, SpeciesLinks>();
+
+            var sp = connection.Query<Species, SpeciesDetails, SpeciesLinks, Species>(
+            query,
+            (species, speciesDetails, speciesLinks) =>
+            {
+                foundSpecies.SpeciesTag = species.SpeciesTag;
+                foundSpecies.FullSpeciesName = species.FullSpeciesName;
+                foundSpecies.Category = species.Category;
+
+                if (!details.ContainsKey(speciesDetails.Id))
+                {
+                    details.Add(speciesDetails.Id, speciesDetails);
+                }
+                if (!links.ContainsKey(speciesLinks.Id))
+                {
+                    links.Add(speciesLinks.Id, speciesLinks);
+                }
+                return species;
+            },
+            new { SpeciesTag = speciesTag },
+            splitOn: "Id");
+
+            foundSpecies.Details = details.Select(val => val.Value).ToList();
+            foundSpecies.Links = links.Select(val => val.Value).ToList();
+
+            return foundSpecies;
         }
     }
 }

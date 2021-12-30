@@ -5,6 +5,6 @@ namespace EndangeredSpeciesFunctions.DataAccess
 {
     public interface ISpeciesInformationConnection
     {
-        public List<Species> FindSpeciesWithInformation(params string[] speciesTags);
+        public Species FindSpeciesWithInformation(TagRequest speciesTag);
     }
 }
