@@ -26,7 +26,7 @@ class InfoView extends Component {
                     </div>
 
                     <div className='text'>
-                        {this.state.text == null ? 'Choose species on sidebar to display information.'
+                        {this.state.text == null ? 'Choose species on the sidebar to display information.'
                             : this.state.text}
                     </div>
 
