@@ -12,17 +12,17 @@ class HomeView extends Component {
                     <p>
                         The purpose of this app is to make preserving endangered species
                         easy. Currently, 3 functionalities are offered. These are described below
-                        and accesible from navigation bar on top of page.
+                        and accesible from the navigation bar on top of the page.
                     </p>
                 </div>
 
                 <div className='info'>
                     <h4>Map of Endangered Species</h4>
                     <p>
-                        This functionality displays map of world and gives information about
-                        location of some of endangered species that live on selected area.
-                        To select an area, simply click on it or choose option "select my localization"
-                        to select your current localization.
+                        This functionality displays a world map and provides information about
+                        location of endangered species inhabiting selected areas.
+                        To select an area, simply click on it or choose the option "select my location"
+                        to select your current location.
                     </p>
                 </div>
 
@@ -31,14 +31,17 @@ class HomeView extends Component {
                 <div className='info'>
                     <h4>Species Classification</h4>
                     <p>
-                        Species Classification helps to...
+                        Species Classification helps identify endangered species based on an uploaded
+                        photo. To identify an endangered species, upload an image and select "Identify".
+                        The photo will be identified as a certain endangered species or it will not be identified as any.
                     </p>
                 </div>
 
                 <div className='info'>
                     <h4>Encyclopedia</h4>
                     <p>
-                        Endangered species...
+                        All the endangered species present in our database have a small encyclopedia entry.
+                        That way, you can learn more about endangered species in your area and around the world.
                     </p>
                 </div>
 
