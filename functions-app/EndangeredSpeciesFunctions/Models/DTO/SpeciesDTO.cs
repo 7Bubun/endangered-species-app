@@ -7,7 +7,6 @@ namespace EndangeredSpeciesFunctions.Models.DTO
         public string Tag { get; set; }
         public string FullName { get; set; }
         public string Category { get; set; }
-        public List<DetailsDTO> Details { get; set; }
         public List<LinksDTO> Links { get; set; }
     }
 }

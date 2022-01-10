@@ -61,7 +61,6 @@ namespace EndangeredSpeciesFunctions.DataAccess
             new { SpeciesTag = speciesTag },
             splitOn: "Id");
 
-            foundSpecies.Details = details.Select(val => val.Value).ToList();
             foundSpecies.Links = links.Select(val => val.Value).ToList();
 
             return foundSpecies;

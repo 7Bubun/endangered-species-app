@@ -1,0 +1,1 @@
+CREATE TABLE images(FullSpeciesName varchar(40) NOT NULL PRIMARY KEY, Image blob);

@@ -13,7 +13,6 @@ namespace EndangeredSpeciesFunctions.Models.DTO
                 Tag = sp.SpeciesTag,
                 Category = sp.Category,
                 FullName = sp.FullSpeciesName,
-                Details = DetailsToDTO(sp.Details),
                 Links = LinksToDTO(sp.Links)
             };
         }
