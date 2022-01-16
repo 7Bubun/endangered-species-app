@@ -44,7 +44,7 @@ class InfoView extends Component {
     getSpecies() {
         const request = new XMLHttpRequest();
         request.onload = () => {
-            list = JSON.parse(request.responseText);
+            let list = JSON.parse(request.responseText);
 
             for (let i = 0; i < list.length; i++) {
                 list[i] = list[i].FullSpeciesName;
