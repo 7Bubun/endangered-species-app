@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Config from '../config';
 import logo from '../logo.svg'
 import './InfoView.css';
 
@@ -55,7 +56,7 @@ class InfoView extends Component {
             this.setState({ allSpecies: list });
         };
 
-        request.open('GET', 'URLURLURLURLURL/api/species', true);
+        request.open('GET', Config.API_URL + '/api/species', true);
         request.send();
     }
 
@@ -82,7 +83,7 @@ class InfoView extends Component {
             });
         };
 
-        request.open('POST', 'URLURLURLURLURL/api/encyclopedia', true);
+        request.open('POST', Config.API_URL + '/api/encyclopedia', true);
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify({ name: speciesName }));
     }

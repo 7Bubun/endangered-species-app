@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Config from '../config';
 import './ImageView.css';
 
 class ImageView extends Component {
@@ -41,8 +42,8 @@ class ImageView extends Component {
 
     classify() {
         let file = document.forms['form']['file'].files[0];
-        
-        if(file == null) {
+
+        if (file == null) {
             return;
         }
 
@@ -86,7 +87,7 @@ class ImageView extends Component {
             });
         };
 
-        request.open('POST', 'URLURLURLURLURL/api/species-tag', true);
+        request.open('POST', Config.API_URL + '/api/species-tag', true);
         request.setRequestHeader('Content-Type', 'application/json');
         request.send(JSON.stringify({ name: speciesTag }));
     }
