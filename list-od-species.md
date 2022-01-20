@@ -5,3 +5,7 @@
 - Asian giant softshell turtle
 - Edwards's pheasant
 - Snow leopard
+- Rhinoceros
+- Giant panda
+- Red handfish
+- Red panda
