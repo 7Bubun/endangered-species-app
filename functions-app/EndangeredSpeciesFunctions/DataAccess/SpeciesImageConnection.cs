@@ -1,11 +1,14 @@
-﻿using Dapper;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Dapper;
 using EndangeredSpeciesFunctions.Models;
 using EndangeredSpeciesFunctions.Models.DTO;
-using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +17,6 @@ namespace EndangeredSpeciesFunctions.DataAccess
 {
     public class SpeciesImageConnection : ISpeciesImageConnection
     {
-        private const string imageQuery = @"SELECT * FROM Images i WHERE i.FullSpeciesName = @Name";
         private const string speciesQuery =
                 @"SELECT *
                 FROM Species s INNER JOIN SpeciesDetails sd ON s.SpeciesTag = sd.SpeciesTag
@@ -22,22 +24,29 @@ namespace EndangeredSpeciesFunctions.DataAccess
                 WHERE s.FullSpeciesName = @Name";
 
         private readonly IConfiguration configuration;
+        private readonly BlobContainerClient client;
 
         public SpeciesImageConnection(IConfiguration configuration)
         {
             this.configuration = configuration;
+            client = new BlobContainerClient
+                (configuration.GetConnectionString("ImageProd"), "endangered-species-blob");
         }
 
         public SpeciesWithImage FindSpeciesWithImage(ImageRequest request)
         {
-            SpeciesImages image;
+            SpeciesImages image = new SpeciesImages();
             Species foundSpecies;
-            using (var connection = new SqliteConnection(configuration.GetConnectionString("ImageDev")))
+            string imageName = request.Name.ToLower().Replace(" ","") + ".jpg";
+
+            BlobClient blobClient = client.GetBlobClient(imageName);
+            if (blobClient.Exists())
             {
-                image = connection.Query<SpeciesImages>(imageQuery, new { Name = request.Name })
-                    .FirstOrDefault();
+                var download = blobClient.DownloadContent();
+                image.FullSpeciesName = request.Name;
+                image.Image = download.Value.Content.ToArray();
             }
-            using (var connection = new SqliteConnection(configuration.GetConnectionString("Dev")))
+            using (var connection = new SqlConnection(configuration.GetConnectionString("Prod")))
             {
                 foundSpecies = GetSpecies(connection, request.Name);
             }

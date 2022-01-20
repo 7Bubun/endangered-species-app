@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Dapper;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Data.Sqlite;
 using System;
 using System.Linq;
 using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace EndangeredSpeciesFunctions.DataAccess
 {
@@ -26,7 +26,7 @@ namespace EndangeredSpeciesFunctions.DataAccess
 
         public Species FindSpeciesWithInformation(TagRequest speciesTag)
         {
-            using (var connection = new SqliteConnection(configuration.GetConnectionString("Dev")))
+            using (var connection = new SqlConnection(configuration.GetConnectionString("Prod")))
             {
                 Species foundSpecies = GetSpecies(connection, speciesTag.Tag);
                 return foundSpecies;

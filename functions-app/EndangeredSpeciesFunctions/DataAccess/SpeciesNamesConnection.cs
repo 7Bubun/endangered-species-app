@@ -1,8 +1,8 @@
 ﻿using Dapper;
 using EndangeredSpeciesFunctions.Models.DTO;
-using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace EndangeredSpeciesFunctions.DataAccess
@@ -20,7 +20,7 @@ namespace EndangeredSpeciesFunctions.DataAccess
 
         public List<SpeciesNameResponse> GetAllSpeciesNames()
         {
-            using (var connection = new SqliteConnection(configuration.GetConnectionString("Dev")))
+            using (var connection = new SqlConnection(configuration.GetConnectionString("Prod")))
             {
                 List<SpeciesNameResponse> names = connection.Query<SpeciesNameResponse>(query).ToList();
                 return names;
