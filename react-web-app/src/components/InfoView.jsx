@@ -3,6 +3,8 @@ import logo from '../logo.svg'
 import './InfoView.css';
 
 class InfoView extends Component {
+    state = {};
+
     render() {
         return (
             <div className='container'>
