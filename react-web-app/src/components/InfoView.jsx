@@ -44,16 +44,22 @@ class InfoView extends Component {
         );
     }
 
+    componentDidMount() {
+        this.getSpecies();
+    }
+
     getSpecies() {
         const request = new XMLHttpRequest();
         request.onload = () => {
-            let list = JSON.parse(request.responseText);
+            if (request.status === 200) {
+                let list = JSON.parse(request.responseText);
 
-            for (let i = 0; i < list.length; i++) {
-                list[i] = list[i].FullSpeciesName;
+                for (let i = 0; i < list.length; i++) {
+                    list[i] = list[i].FullSpeciesName;
+                }
+
+                this.setState({ allSpecies: list });
             }
-
-            this.setState({ allSpecies: list });
         };
 
         request.open('GET', Config.API_URL + '/api/species', true);
@@ -62,25 +68,30 @@ class InfoView extends Component {
 
     getData(speciesName) {
         const request = new XMLHttpRequest();
-        request.onload = () => {
-            const data = JSON.parse(request.responseXML);
-            let text = [];
-            let links = [];
+        request.onreadystatechange = () => {
+            if (request.readyState === 4) {
+                const data = JSON.parse(request.responseText);
 
-            for (const information of data.Details) {
-                text.push(information.Information);
+                console.log(data);  //EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+                let text = [];
+                let links = [];
+
+                for (const information of data.Details) {
+                    text.push(information.Information);
+                }
+
+                for (const link of data.Links) {
+                    links.push(link.Link);
+                }
+
+                this.setState({
+                    title: speciesName,
+                    text: text,
+                    imageURL: 'data:image/(png|jpg);base64, ' + data.Image,
+                    links: links
+                });
             }
-
-            for (const link of data.Links) {
-                links.push(link.Link);
-            }
-
-            this.setState({
-                title: speciesName,
-                text: text,
-                imageURL: 'data:image/(png|jpg);base64, ' + data.Image,
-                links: links
-            });
         };
 
         request.open('POST', Config.API_URL + '/api/encyclopedia', true);

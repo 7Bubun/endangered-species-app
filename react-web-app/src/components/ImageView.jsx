@@ -18,7 +18,7 @@ class ImageView extends Component {
                         <input name='file' type='file' className='file-input' />
 
                     </form>
-                    <button onClick={this.classify}>Check</button>
+                    <button onClick={() => this.classify(this.getInfo)}>Check</button>
                 </div>
 
                 <div className='information-container'>
@@ -40,7 +40,7 @@ class ImageView extends Component {
         );
     }
 
-    classify() {
+    classify(func) {
         let file = document.forms['form']['file'].files[0];
 
         if (file == null) {
@@ -52,7 +52,13 @@ class ImageView extends Component {
             if (request.readyState === 4) {
                 if (request.status === 200) {
                     const data = JSON.parse(request.responseText);
-                    console.log(data.predictions[0].tagName);
+                    const result = data.predictions[0];
+
+                    if (result.probability > 0.8) {
+                        func(result.tagName);
+                    } else {
+                        console.log('Noooo');   //tmp
+                    }
                 }
             }
         };
@@ -70,26 +76,33 @@ class ImageView extends Component {
         fileReader.readAsArrayBuffer(file);
     }
 
-    getInfo(speciesTag) {
+    getInfo = (speciesTag) => {
         const request = new XMLHttpRequest();
-        request.onload = () => {
-            const data = JSON.parse(request.responseXML);
-            let links = [];
+        request.onreadystatechange = () => {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    const data = JSON.parse(request.responseText);
+                    console.log(data); //EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEe
+                    let links = [];
 
-            for (const link of data.Links) {
-                links.push(link.Link);
+                    for (const link of data.Links) {
+                        links.push(link.Link);
+                    }
+
+                    this.setState({
+                        fullName: data.FullName,
+                        category: data.Category,
+                        links: links
+                    });
+                } else {
+                    console.log('AJAX error!'); //tmp
+                }
             }
-
-            this.setState({
-                fullName: data.FullName,
-                category: data.Category,
-                links: links
-            });
         };
 
         request.open('POST', Config.API_URL + '/api/species-tag', true);
         request.setRequestHeader('Content-Type', 'application/json');
-        request.send(JSON.stringify({ name: speciesTag }));
+        request.send(JSON.stringify({ tag: speciesTag }));
     }
 }
 

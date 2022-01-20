@@ -1,3 +1,3 @@
 export default class Config {
-    static API_URL = 'url';
+    static API_URL = 'https://endangered-species-function.azurewebsites.net';
 }
