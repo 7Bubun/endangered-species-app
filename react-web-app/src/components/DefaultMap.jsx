@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import {AzureMap, AzureMapsProvider, IAzureMapOptions} from 'react-azure-maps'
 import {AuthenticationType} from 'azure-maps-control'
 import Papa from 'papaparse'
-
+import { key } from "./key";
 const option = {
   authOptions: {
       authType: AuthenticationType.subscriptionKey,
-      subscriptionKey: ""
+      subscriptionKey: key
   },
 }
 
