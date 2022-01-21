@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import img from '../tmp/img.jpg';
+import Config from '../config';
 import logo from '../logo.svg'
 import './InfoView.css';
 
 class InfoView extends Component {
-    state = {
-        allSpecies: this.getSpecies()
-    };
+    state = {};
 
     render() {
         return (
             <div className='container'>
                 <div className='sidebar'>
-                    {this.state.allSpecies.map(species => <div key={species}
-                        className='sidebar-element' onClick={() => this.getData(species)}>{species}</div>)}
+                    {this.state.allSpecies == null
+                        ? <div className='sidebar-element'>Loading...</div>
+                        : this.state.allSpecies.map(species => <div key={species}
+                            className='sidebar-element' onClick={() => this.getData(species)}>{species}</div>)}
                 </div>
 
                 <div className='content'>
@@ -27,7 +27,7 @@ class InfoView extends Component {
 
                     <div className='text'>
                         {this.state.text == null ? 'Choose species on the sidebar to display information.'
-                            : this.state.text}
+                            : this.state.text.map(paragraph => <p key={paragraph}>paragraph</p>)}
                     </div>
 
                     <div className='footer'>
@@ -44,60 +44,59 @@ class InfoView extends Component {
         );
     }
 
-    getSpecies() {
-        let list = [];
-        //mock
-        for (let i = 0; i < 20; i++) {
-            list.push('Student' + Math.round(79800 * Math.random()));
-        }
+    componentDidMount() {
+        this.getSpecies();
+    }
 
-        return list;
+    getSpecies() {
+        const request = new XMLHttpRequest();
+        request.onload = () => {
+            if (request.status === 200) {
+                let list = JSON.parse(request.responseText);
+
+                for (let i = 0; i < list.length; i++) {
+                    list[i] = list[i].FullSpeciesName;
+                }
+
+                this.setState({ allSpecies: list });
+            }
+        };
+
+        request.open('GET', Config.API_URL + '/api/species', true);
+        request.send();
     }
 
     getData(speciesName) {
-        //mock
-        this.setState({
-            title: speciesName,
-            text: this.getLoremIpsum(),
-            imageURL: img,
-            links: [
-                'https://pl.wikipedia.org/wiki/Politechnika_Warszawska',
-                'https://www.pw.edu.pl'
-            ]
-        });
-    }
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = () => {
+            if (request.readyState === 4) {
+                const data = JSON.parse(request.responseText);
 
-    //mock
-    getLoremIpsum() {
-        return ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-            + 'Curabitur vel neque sed est hendrerit consequat. Phasellus et quam '
-            + 'sed mi luctus egestas et ut felis. Phasellus sollicitudin id neque et tincidunt. '
-            + 'Integer tempor justo massa, vel viverra nibh bibendum quis. Proin quis nulla euismod, '
-            + 'posuere odio eget, placerat tortor. Quisque felis nisi, iaculis et dictum a, '
-            + 'finibus quis augue. Quisque vitae nisl sapien. Aliquam erat volutpat. Donec tristique '
-            + 'sollicitudin egestas. Pellentesque ligula lectus, feugiat sit amet velit ac, egestas volutpat urna. '
-            + 'Sed feugiat maximus tortor, lacinia semper nunc auctor ac. Nam porta ullamcorper leo. '
-            + 'Praesent augue massa, tristique vel neque quis, sagittis feugiat leo. '
-            + 'Vestibulum et nulla sed sem pretium maximus. Proin ut est lorem. Pellentesque nisl eros, '
-            + 'blandit vel malesuada a, tempor et risus. Nulla ultricies eleifend dictum. '
-            + 'Nulla tristique, nunc eget hendrerit dictum, ipsum dolor interdum tellus, '
-            + 'non vehicula elit quam iaculis risus. Nullam malesuada, sem sit amet convallis viverra, '
-            + 'ipsum nulla bibendum justo, condimentum aliquet tellus libero sit amet dui. '
-            + 'Praesent sollicitudin imperdiet luctus. Proin suscipit, eros a vestibulum ultricies, '
-            + 'ante enim mollis orci, eget auctor mi libero ac tortor. Cras ex dolor, '
-            + 'molestie in ultricies non, fermentum blandit nisl. Curabitur viverra leo '
-            + 'id sapien convallis facilisis. Integer egestas felis non velit tincidunt laoreet. '
-            + 'Pellentesque eu lectus sit amet orci condimentum sodales. Mauris id quam enim. '
-            + 'Nam a quam at massa fermentum venenatis eget non urna. Donec dictum consectetur varius. '
-            + 'Curabitur rutrum rhoncus urna et condimentum. Class aptent taciti sociosqu ad litora '
-            + 'torquent per conubia nostra, per inceptos himenaeos. Vivamus a lectus vel diam vulputate '
-            + 'placerat eu eu sem. Duis ullamcorper ex id tempor finibus. Ut at viverra felis, '
-            + 'quis euismod metus. Aliquam fringilla sollicitudin nisi, a ultrices dui vehicula quis. '
-            + 'Mauris tempor feugiat tellus sed mattis. Interdum et malesuada fames ac ante ipsum primis '
-            + 'in faucibus. Nullam fringilla nisi fermentum, pulvinar ipsum ac, viverra nibh. '
-            + 'Phasellus rhoncus nibh tortor, nec iaculis felis aliquet id. Ut eget metus elit. '
-            + 'Vestibulum a leo nulla. Aenean est nunc, lacinia non consequat sit amet, congue a magna.'
-        );
+                console.log(data);  //EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+                let text = [];
+                let links = [];
+
+                for (const information of data.Details) {
+                    text.push(information.Information);
+                }
+
+                for (const link of data.Links) {
+                    links.push(link.Link);
+                }
+
+                this.setState({
+                    title: speciesName,
+                    text: text,
+                    imageURL: 'data:image/(png|jpg);base64, ' + data.Image,
+                    links: links
+                });
+            }
+        };
+
+        request.open('POST', Config.API_URL + '/api/encyclopedia', true);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify({ name: speciesName }));
     }
 }
 

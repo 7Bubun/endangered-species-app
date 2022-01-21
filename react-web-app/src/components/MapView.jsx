@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import DefaultMap from './DefaultMap.jsx';
 
 class MapView extends Component {
