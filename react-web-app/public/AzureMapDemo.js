@@ -43,86 +43,12 @@ function GetMap() {
         var content = document.createElement('div');
         content.style.setProperty('padding', '15px');
         content.style.setProperty('color', 'black');
-        var option1 = document.createElement('input');
-        option1.type = 'radio';
-        option1.id = 'littered';
-        option1.name = radio;
-        content.appendChild(option1);
         var label1 = document.createElement('label');
         label1.setAttribute('for', 'littered')
-        label1.innerText = 'Zaśmiecone';
+        label1.innerText = givenstate;
         content.appendChild(label1);
-        content.appendChild(document.createElement('br'));
-        var option2 = document.createElement('input');
-        option2.type = 'radio';
-        option2.id = 'tbcleaned';
-        option2.name = radio;
-        content.appendChild(option2);
-        var label2 = document.createElement('label');
-        label2.setAttribute('for', 'tbcleaned')
-        label2.innerText = 'Wkrótce sprzątane';
-        content.appendChild(label2);
-        content.appendChild(document.createElement('br'));
-        var option3 = document.createElement('input');
-        option3.type = 'radio';
-        option3.id = 'cleaned';
-        option3.name = radio;
-        content.appendChild(option3);
-        var label3 = document.createElement('label');
-        label3.setAttribute('for', 'cleaned')
-        label3.innerText = 'Posprzątane';
-        content.appendChild(label3);
-        content.appendChild(document.createElement('br'));
-        var saveButton = document.createElement('input');
-        saveButton.type = 'button';
-        saveButton.value = 'Zapisz';
-        saveButton.addEventListener('click', function () {
-            var radios = content.querySelectorAll('input[type=radio]');
-            if (radios[0].checked) {
-                const put1 = new XMLHttpRequest();
-                const url1 = '/points/'.concat(marker.properties.id);
-                put1.open("PUT", url1);
-                put1.setRequestHeader("Content-Type", "application/json");
-                var data = JSON.stringify({ "state": 0 });
-                put1.send(data);
-                marker.setOptions({ color: 'red' });
-            } else if (radios[1].checked) {
-                const put2 = new XMLHttpRequest();
-                const url2 = '/points/'.concat(marker.properties.id);
-                put2.open("PUT", url2);
-                put2.setRequestHeader("Content-Type", "application/json");
-                var data = JSON.stringify({ "state": 1 });
-                put2.send(data);
-                marker.setOptions({ color: 'orange' });
-            } else if (radios[2].checked) {
-                const put3 = new XMLHttpRequest();
-                const url3 = '/points/'.concat(marker.properties.id);
-                put3.open("DELETE", url3);
-                put3.setRequestHeader("Content-Type", "application/json");
-                put3.responseType = 'text';
-                put3.onreadystatechange = function () {
-                    if (put3.readyState === XMLHttpRequest.DONE) {
-                        var status = put3.status;
-                        if (status === 0 || (status >= 200 && status < 400)) {
-                            marker.setOptions({ color: 'green' });
-                            marker.setOptions({ popup: new atlas.Popup({
-                                content: "<div style='padding: 15px; color: black;'>Dziękujemy za pomoc naszej planecie!</div>",
-                                pixelOffset: [0, -30]
-                            }),})
-                            marker.togglePopup();
-                            setTimeout(function(){ marker.getOptions().popup.close(); map.markers.remove(marker); }, 3000);
-                        } else {
-                            // Oh no! There has been an error with the request!
-                        }
-                    }
-                };
-                put3.send();
-            }
-            marker.togglePopup();
-        });
-        content.appendChild(saveButton);
         var marker = new atlas.HtmlMarker({
-            color: 'red',
+            color: 'green',
             position: [pos0, pos1],
             popup: new atlas.Popup({
                 content: content,
@@ -132,11 +58,6 @@ function GetMap() {
         marker.properties = {
             id: givenid,
             state: givenstate
-        }
-        if (marker.properties.state == 0) {
-            marker.setOptions({ color: 'red' });
-        } else if (marker.properties.state == 1) {
-            marker.setOptions({ color: 'orange' })
         }
         map.events.add('contextmenu', marker, () => {
             marker.togglePopup();
@@ -158,11 +79,9 @@ function GetMap() {
                     var properties = element.split(", ")
                     array.push(properties)
 
-                    console.log(properties)
-
                     positions = [properties[5].split('"')[1], properties[4].split('"')[1]]
-
-                    createMarker(positions[0], positions[1], 0, 'littered');
+                    country = properties[0];
+                    createMarker(positions[0], positions[1], 0, country);
                 });
 
                 console.log(array)
