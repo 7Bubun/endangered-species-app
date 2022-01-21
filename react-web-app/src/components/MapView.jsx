@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 
-import AzureMapCom from './App.js';
+import DefaultMap from './DefaultMap.jsx';
 
 class MapView extends Component {
     render() {
         return (
             <><h4>mapka</h4><div>
-                <AzureMapCom/>
+                <DefaultMap/>
             </div></> 
         );
     }
