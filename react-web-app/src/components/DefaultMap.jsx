@@ -11,11 +11,18 @@ const option = {
   },
 }
 
-Papa.parse("countries_codes_and_coordinates.csv", {
-  complete: function(results) {
-    console.log("Finished:", results.data);
-  }}
-)
+var array
+
+fetch('countries_codes_and_coordinates.csv').then(function (response) {
+  let reader = response.body.getReader();
+  let decoder = new TextDecoder('utf-8');
+
+  return reader.read().then(function (result) {
+      const csvString = decoder.decode(result.value);
+      array = Papa.parse(csvString)
+      console.log(array)
+  });
+})
 
 class DefaultMap extends Component {
   render() {
