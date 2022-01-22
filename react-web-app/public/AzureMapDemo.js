@@ -61,6 +61,38 @@ function GetMap() {
         }
         map.events.add('contextmenu', marker, () => {
             marker.togglePopup();
+            countrycode = marker.properties.id;
+
+            table = document.getElementById("endered-species-list")
+
+            const get = new XMLHttpRequest();
+            const url = `https://apiv3.iucnredlist.org/api/v3/country/getspecies/${countrycode}?token=9bb4facb6d23f48efbf424bb05c0c1ef1cf6f468393bc745d42179ac4aca5fee`
+            get.open("GET", url);
+            get.setRequestHeader("Content-Type", "application/json");
+            get.onreadystatechange = function () {
+                if (get.readyState === XMLHttpRequest.DONE) {
+                    var status = get.status;
+                    if (status === 0 || (status >= 200 && status < 400)) {
+                        allSpecies = JSON.parse(get.responseText).result;
+
+                        var i = 1
+                        allSpecies.forEach(element => {
+                            var category = element.category
+                            if ( category == "EW" || category == "CR" ||  category == "EN" ) {
+                                var row = table.insertRow(i);
+                                var cell1 = row.insertCell(0);
+                                var cell2 = row.insertCell(1);
+                                cell1.innerHTML = element.scientific_name;
+                                cell2.innerHTML = category;
+                                i++
+                            }
+                        });
+                    } else {
+                        // Oh no! There has been an error with the request!
+                    }
+                }
+            };
+            get.send();
         });
         map.markers.add(marker);
     }
@@ -85,31 +117,7 @@ function GetMap() {
                     id = properties[1].split('"')[1];
                     createMarker(positions[0], positions[1], id, country);
                 });
-
-                console.log(array)
             });
           })
-
-        const get = new XMLHttpRequest();
-        const url = '/points'
-        get.open("GET", url);
-        get.setRequestHeader("Content-Type", "application/json");
-        get.onreadystatechange = function () {
-            if (get.readyState === XMLHttpRequest.DONE) {
-                var status = get.status;
-                if (status === 0 || (status >= 200 && status < 400)) {
-                    allPoints = JSON.parse(get.responseText);
-                    for (let i = 0; i < allPoints.length; i++) {
-                        positions = allPoints[i]['coordinates'].split(" ");
-                        id = allPoints[i]['id'];
-                        state = allPoints[i]['state'];
-                        createMarker(positions[0], positions[1], id, state);
-                    }
-                } else {
-                    // Oh no! There has been an error with the request!
-                }
-            }
-        };
-        get.send();
     });
 }
