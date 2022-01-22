@@ -61,9 +61,16 @@ function GetMap() {
         }
         map.events.add('contextmenu', marker, () => {
             marker.togglePopup();
+            table = document.getElementById("endered-species-list")
+            table.innerHTML = "";
+            var row = table.insertRow(0);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = "Scientific name";
+            cell2.innerHTML = "Category";
             countrycode = marker.properties.id;
 
-            table = document.getElementById("endered-species-list")
+            
 
             const get = new XMLHttpRequest();
             const url = `https://apiv3.iucnredlist.org/api/v3/country/getspecies/${countrycode}?token=9bb4facb6d23f48efbf424bb05c0c1ef1cf6f468393bc745d42179ac4aca5fee`
@@ -74,12 +81,13 @@ function GetMap() {
                     var status = get.status;
                     if (status === 0 || (status >= 200 && status < 400)) {
                         allSpecies = JSON.parse(get.responseText).result;
-
+                        
                         var i = 1
                         allSpecies.forEach(element => {
                             var category = element.category
                             if ( category == "EW" || category == "CR" ||  category == "EN" ) {
                                 var row = table.insertRow(i);
+                                row.classList.add('species');
                                 var cell1 = row.insertCell(0);
                                 var cell2 = row.insertCell(1);
                                 cell1.innerHTML = element.scientific_name;
