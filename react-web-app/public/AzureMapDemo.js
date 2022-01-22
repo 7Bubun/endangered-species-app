@@ -64,6 +64,7 @@ function GetMap() {
         });
         map.markers.add(marker);
     }
+
     map.events.add('ready', function () {
         fetch('countries_codes_and_coordinates.csv').then(function (response) {
             let reader = response.body.getReader();
@@ -80,8 +81,9 @@ function GetMap() {
                     array.push(properties)
 
                     positions = [properties[5].split('"')[1], properties[4].split('"')[1]]
-                    country = properties[0];
-                    createMarker(positions[0], positions[1], 0, country);
+                    country = properties[0].split('"')[1];
+                    id = properties[1].split('"')[1];
+                    createMarker(positions[0], positions[1], id, country);
                 });
 
                 console.log(array)
@@ -109,50 +111,5 @@ function GetMap() {
             }
         };
         get.send();
-        map.events.add('click', function (e) {
-            x = e.position[0];
-            y = e.position[1];
-            var popupContent = document.createElement('div');
-            popupContent.innerHTML = "Czy to miejsce jest zaśmiecone?<br>";
-            popupContent.style.setProperty('padding', '15px');
-            popupContent.style.setProperty('color', 'black');
-            var yesButton = document.createElement('input');
-            yesButton.type = 'button';
-            yesButton.value = 'Tak';
-            yesButton.style.setProperty('margin-right', '10px');
-            var noButton = document.createElement('input');
-            noButton.type = 'button';
-            noButton.value = 'Nie';
-            yesButton.addEventListener('click', function () {
-                radio = x.toString().concat(" ").concat(y.toString());
-                const Http = new XMLHttpRequest();
-                const url = '/points'
-                Http.open("POST", url);
-                Http.setRequestHeader("Content-Type", "application/json");
-                var data = JSON.stringify({ "coordinates": radio });
-                Http.onreadystatechange = function () {
-                    if (Http.readyState === XMLHttpRequest.DONE) {
-                        var status = Http.status;
-                        if (status === 0 || (status >= 200 && status < 400)) {
-                            createMarker(x, y, Http.responseText, 0);
-                        } else {
-                            // Oh no! There has been an error with the request!
-                        }
-                    }
-                };
-                Http.send(data);
-                popup.remove();
-            });
-            noButton.addEventListener('click', function () {
-                popup.remove();
-            });
-            popupContent.appendChild(yesButton);
-            popupContent.appendChild(noButton);
-            var popup = new atlas.Popup({
-                content: popupContent,
-                position: [e.position[0], e.position[1]],
-            });
-            popup.open(map);
-        });
     });
 }

@@ -8,9 +8,9 @@ class Navbar extends Component {
                 <button className="navbar-button" onClick={() => this.props.routingFunction("homeview")}>
                     Homepage
                 </button>
-                <button className="navbar-button" onClick={() => this.props.routingFunction("mapview")}>
+                <a href="map.html"><button className="navbar-button">
                     Map of Endangered Species
-                </button>
+                </button></a>
                 <button className="navbar-button" onClick={() => this.props.routingFunction("imageview")}>
                     Species Classification
                 </button>
