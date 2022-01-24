@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="mainstyle.css">
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+
+    <!-- Add references to the Azure Maps Map control JavaScript and CSS files. -->
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" type="text/css" />
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+
+    <script src="./AzureMapDemo.js"></script>
+</head>
+<body onload="GetMap()">
+    <div>
+        <div class="Navbar">
+            <a href="index.html"><button class="navbar-button">
+                Back
+            </button></a>
+        </div>
+        <h1>Map of Endangered Species</h1>
+    </div>
+    <div id="myMap"></div>
+    <div class ="wrapperList">
+        <h3>Endangered species for selected location:</h3>
+        <table id="endered-species-list">
+            <tr>
+                <th>Scientific name</th>
+                <th>Category</th>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

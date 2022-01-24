@@ -1,0 +1,77 @@
+html{
+    height:100%;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0px;
+    background-color: #333333;
+    color: #CECECE;
+    height:100%;
+}
+
+#myMap {
+    position: relative;
+    height: 70%;
+    margin: auto;
+    padding:20px;
+}
+
+.wrapperList{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    text-align:center;
+}
+
+#endered-species-list{
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+}
+
+h1{
+    margin: 0;
+    padding: 20px;
+    text-align:center;
+    background-color: #333333;
+}
+
+.Navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1a1a1a;
+    text-align: center;
+    height: 3rem;
+}
+
+.navbar-button {
+    width: 13em;
+    background-color: #005105;
+    color: #cecece;
+    height: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.25rem;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    vertical-align: middle ;
+}
+
+a:hover{
+    color: rgb(94, 255, 0);
+    transition: color 0.5s ease;
+}
+
+#description{
+    display: inline-block;
+    float: right;
+    margin: 20px;
+}
+
+#description p {
+    text-align: right;
+}

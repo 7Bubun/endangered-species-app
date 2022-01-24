@@ -73,7 +73,7 @@ function GetMap() {
             
 
             const get = new XMLHttpRequest();
-            const url = `https://apiv3.iucnredlist.org/api/v3/country/getspecies/${countrycode}?token=9bb4facb6d23f48efbf424bb05c0c1ef1cf6f468393bc745d42179ac4aca5fee`
+            const url = `https://apiv3.iucnredlist.org/api/v3/country/getspecies/${countrycode}?token=310609dade506c812c545518f4cc7e2be09c71a1f7787411a4f894d3a9849909`
             get.open("GET", url);
             get.setRequestHeader("Content-Type", "application/json");
             get.onreadystatechange = function () {
