@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-
-//import AzureMapCom from './App.js';
+import MapController from './MapController.jsx';
+import { AzureMapsProvider } from 'react-azure-maps';
 
 class MapView extends Component {
     render() {
         return (
-            <><h4>mapka</h4><div>
-                {/* <AzureMapCom/> */}
-            </div></>
+            <AzureMapsProvider>
+                <h4>mapka</h4>
+                <MapController />
+            </AzureMapsProvider>
         );
     }
 }

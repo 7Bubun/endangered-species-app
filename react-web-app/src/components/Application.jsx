@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Content from "./Content";
 import Navbar from "./Navbar";
 
+
 class Application extends Component {
     state = { nameOfCurrentView: "homeview" };
 
