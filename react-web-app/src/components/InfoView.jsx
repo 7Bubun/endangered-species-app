@@ -27,7 +27,7 @@ class InfoView extends Component {
 
                     <div className='text'>
                         {this.state.text == null ? 'Choose species on the sidebar to display information.'
-                            : this.state.text.map(paragraph => <p key={paragraph}>paragraph</p>)}
+                            : this.state.text.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
                     </div>
 
                     <div className='footer'>
@@ -71,9 +71,6 @@ class InfoView extends Component {
         request.onreadystatechange = () => {
             if (request.readyState === 4) {
                 const data = JSON.parse(request.responseText);
-
-                console.log(data);  //EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
                 let text = [];
                 let links = [];
 

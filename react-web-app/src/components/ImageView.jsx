@@ -33,14 +33,16 @@ class ImageView extends Component {
                     <div className='cb'></div>
 
                     <div className='links centered-content'>
-                        {this.state.links.map(link => <div key={link}>{link}</div>)}
+                        <ul>
+                            {this.state.links.map(link => <li key={link}>{link}</li>)}
+                        </ul>
                     </div>
                 </div>
             </div>
         );
     }
 
-    classify(func) {
+    classify = (func) => {
         let file = document.forms['form']['file'].files[0];
 
         if (file == null) {
@@ -56,8 +58,6 @@ class ImageView extends Component {
 
                     if (result.probability > 0.8) {
                         func(result.tagName);
-                    } else {
-                        console.log('Noooo');   //tmp
                     }
                 }
             }
@@ -82,7 +82,6 @@ class ImageView extends Component {
             if (request.readyState === 4) {
                 if (request.status === 200) {
                     const data = JSON.parse(request.responseText);
-                    console.log(data); //EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEe
                     let links = [];
 
                     for (const link of data.Links) {
@@ -94,8 +93,6 @@ class ImageView extends Component {
                         category: data.Category,
                         links: links
                     });
-                } else {
-                    console.log('AJAX error!'); //tmp
                 }
             }
         };
