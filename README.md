@@ -4,6 +4,9 @@
 ## Opis projektu
 Głównym założeniem projektu jest stworzenie aplikacji webowej zwiększającej świadomość społeczną na temat zagrożonych gatunków. Aplikacja umożliwia poszerzenie wiedzy na ten temat. Ponadto, aplikacja daje możliwość weryfikacji, czy dane zwierzę jest przedstawicielem zagrożonego gatunku. Komponenty systemu zostały wdrożone na chmurze Microsoft Azure.
 
+## Link do wideoprezentacji
+https://www.youtube.com/watch?v=kSzz2birLzE
+
 ## Skład zespołu
 - Szymon Kuś https://github.com/ogoras
 - Kacper Hołubowicz https://github.com/KacperHolubowicz
