@@ -16,15 +16,15 @@ Głównym założeniem projektu jest stworzenie aplikacji webowej zwiększające
 - miniencyklopedia zawierająca informacje na temat niektórych zagrożonych gatunków oraz linki do dalszych informacji (artykuły itp. z stron trzecich)
 
 ## Schemat działania
-- mapa
+### mapa
  1. Użytkownik wybiera zakładkę "Map of Endangered Species".
  2. Wyświetlenie użytkownikowi widoku mapy z zaznaczonymi punktami związanymi z poszczególnymi krajami.
  3. Po wciśnięciu punktu prawym przyciskiem myszy pod mapą pojawia się lista zagrożonych gatunków występujących w danym kraju.
-- klasyfikacja obrazów
+### klasyfikacja obrazów
  1. Użytkownik wybiera zakładkę "Species Classification".
  2. Użytkownik wybiera zdjęcie zwierzęcia z swojego urządzenia i potwierdza.
  3. Aplikacja wyświetla wynik klasyfikacji w postaci nazwy zagrożonego garunku, kategorii zagrożenia oraz linki do zasobów informacyjnych.
-- encyklopedia
+### encyklopedia
  1. Użytkownik wybiera zakładkę "Encyclopedia".
  2. Aplikacja wyświetla informacje.
 
