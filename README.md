@@ -5,10 +5,10 @@
 Głównym założeniem projektu jest stworzenie aplikacji webowej zwiększającej świadomość społeczną na temat zagrożonych gatunków. Aplikacja umożliwia poszerzenie wiedzy na ten temat. Ponadto, aplikacja daje możliwość weryfikacji, czy dane zwierzę jest przedstawicielem zagrożonego gatunku. Komponenty systemu zostały wdrożone na chmurze Microsoft Azure.
 
 ## Skład zespołu
-- Paweł Cegielski
-- Szymon Kuś
-- Kacper Hołubowicz
-- Jakub Grenda
+- Szymon Kuś https://github.com/ogoras
+- Kacper Hołubowicz https://github.com/KacperHolubowicz
+- Jakub Grenda https://github.com/7Bubun
+- Paweł Cegielski https://github.com/Skokus
 
 ## Główne funkcjonalności
 - pokazywanie zagrożonych gatunków na wybranym na mapie obszarze 
